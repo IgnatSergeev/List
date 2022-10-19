@@ -20,4 +20,4 @@ void print(List *list) {
     }
     printf("%d ", temp->value);
     printf("\n");
-}
+}//
