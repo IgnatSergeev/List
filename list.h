@@ -9,7 +9,7 @@ int insert(List *list, int value);
 
 void print(List *list);
 
-int delete(List *list, int *errorCode);
+int delete(List *list, int position);
 
 int changeNode(List *list, int position, int value);
 
