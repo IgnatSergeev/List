@@ -15,7 +15,7 @@ int delete(List* list, int position) {
         return -1;
     }
     Node* walker = list->head;
-    while (walker->position != position-1) {
+    while (walker->position != position - 1) {
         if (walker->next == NULL) {
             return -1;
         }
@@ -30,4 +30,23 @@ int delete(List* list, int position) {
     }
     free(walker->next);
     return 0;
+}
+
+int findNode(List *list, int position, int *errorCode) {
+    if (isEmpty(list) || position < 0) {
+        *errorCode = -1;
+        return 0;
+    }
+    Node *temp = list->head;
+
+    for (int i = 1; i <= position; ++i) {
+        temp = temp->next;
+        if (temp == NULL) {
+            *errorCode = -1;
+            return 0;
+        }
+    }
+
+    return temp->value;
+
 }
