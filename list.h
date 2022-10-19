@@ -17,4 +17,5 @@ bool isEmpty(List *list);
 
 int clear(List *list);
 
-int findNode(List *list, int position);
+// find value by position in list, errorCode == -1 if position below zero or more than real size of list
+int findNode(List *list, int position, int *errorCode);
