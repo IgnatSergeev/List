@@ -20,3 +20,20 @@ int clear(List* list) {
         delete(list, &errorCode);
     }
 }
+
+int changeNode(List* list, int position, int value) {
+    if (isEmpty(list)) {
+        return -1;
+    }
+
+    Node* walker = list->head;
+    while (walker->position != position) {
+        if (walker->next == NULL) {
+            return -1;
+        }
+        walker = walker->next;
+    }
+
+    walker->value = value;
+    return 0;
+}
