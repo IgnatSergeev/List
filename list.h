@@ -3,21 +3,18 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-typedef struct Node {
-    int value;
-    struct Node *next;
-} Node;
+typedef struct List List;
 
-int insert(Node *head, int value);
+int insert(List *list, int value);
 
-void print(Node *head);
+void print(List *list);
 
-int delete(Node *head, int *errorCode);
+int delete(List *list, int *errorCode);
 
-int changeNode(Node *head, int value);
+int changeNode(List *list, int position, int value);
 
-bool isEmpty(Node *head);
+bool isEmpty(List *list);
 
-int clear(Node **head);
+int clear(List *list);
 
-Node *findNode(Node **head, int position);
+int findNode(List *list, int position);
