@@ -11,7 +11,7 @@ struct List {
 };
 
 void print(List *list) {
-    Node *temp = list;
+    Node *temp = list->head;
     printf("The list is: ");
     while(temp->next != NULL)
     {
