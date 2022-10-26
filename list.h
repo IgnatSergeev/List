@@ -5,7 +5,7 @@
 
 typedef struct List List;
 
-int insert(List *list, int value);
+int insert(List *list, int value, int position);
 
 void print(List *list);
 
