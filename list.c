@@ -10,6 +10,18 @@ struct List {
     Node *head;
 };
 
+void print(List *list) {
+    Node *temp = list->head;
+    printf("The list is: ");
+    while(temp->next != NULL)
+    {
+        printf("%d ", temp->value);
+        temp = temp->next;
+    }
+    printf("%d ", temp->value);
+    printf("\n");
+}
+
 int insert(List *list, int value, int position) {
     Node *currentNode = list->head;
     while (currentNode->position != position) {
