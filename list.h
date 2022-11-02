@@ -5,17 +5,26 @@
 
 typedef struct List List;
 
-int insert(List *list, int value, int position);
+//creates an empty list
+List *create();
 
+//inserts the node which has that index(indexes starts from 0)
+int insertNode(List *list, int value, int index);
+
+//prints list`s elements values
 void print(List *list);
 
-int delete(List *list, int position);
+//deletes the node which has that index(indexes starts from 0)
+int deleteNode(List *list, int index);
 
-int changeNode(List *list, int position, int value);
+//changes the value of the node which has that index(indexes starts from 0)
+int changeNode(List *list, int index, int value);
 
+//checks if the list is empty
 bool isEmpty(List *list);
 
-int clear(List *list);
+//clears the list
+void clear(List *list);
 
-// find value by position in list, errorCode == -1 if position below zero or more than real size of list
-int findNode(List *list, int position, int *errorCode);
+//finds the value of the node which has that index(indexes starts from 0)
+int findNode(List *list, int index, int *errorCode);

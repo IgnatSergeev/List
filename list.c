@@ -1,8 +1,8 @@
 #include "list.h"
+#include <stdio.h>
 
 typedef struct Node {
     int value;
-    int position;
     struct Node *next;
 } Node;
 
@@ -10,66 +10,138 @@ struct List {
     Node *head;
 };
 
-int insert(List *list, int value, int position) {
-    Node *currentNode = list->head;
-    while (currentNode->position != position) {
-        if (currentNode->next == NULL) {
-            return -1;
-        }
-        currentNode = currentNode->next;
+void print(List *list) {
+    Node *temp = list->head;
+    while (temp->next != NULL) {
+        printf("%d ", temp->value);
+        temp = temp->next;
     }
-
-    Node *newNode = malloc(sizeof(Node));
-
-    newNode->value = value;
-    newNode->position = currentNode->position;
-    Node *nextNode = currentNode->next;
-    newNode->next = nextNode;
-
-    currentNode->next = newNode;
-    while (currentNode != NULL) {
-        ++currentNode->position;
-        currentNode = currentNode->next;
-    }
-    return 0;
+    printf("%d\n", temp->value);
 }
 
-int delete(List* list, int position) {
+int insertNode(List *list, int value, int index) {
+    if (index < 0) {
+        return -1;
+    }
+    if (index == 0) {
+        Node *newNode = malloc(sizeof(Node));
+        if (newNode == NULL) {
+            return -1;
+        }
+        newNode->next = list->head;
+        newNode->value = value;
+        list->head = newNode;
+        return 0;
+    }
     if (isEmpty(list)) {
         return -1;
     }
-    Node* walker = list->head;
-    while (walker->position != position - 1) {
-        if (walker->next == NULL) {
+
+    Node *iteratorNode = list->head;
+    int currentIndex = 0;
+    while (currentIndex != index - 1) {
+        if (iteratorNode->next == NULL) {
             return -1;
         }
-        walker = walker->next;
+        ++currentIndex;
+        iteratorNode = iteratorNode->next;
     }
-    Node* temp = NULL;
-    if (walker->next != NULL) {
-        temp = walker->next->next;
-        free(walker->next);
-        walker->next = temp;
-        return 0;
+
+    Node *newNode = malloc(sizeof(Node));
+    if (newNode == NULL) {
+        return -1;
     }
-    free(walker->next);
+    newNode->value = value;
+    newNode->next = iteratorNode->next;
+    iteratorNode->next = newNode;
     return 0;
 }
 
-int findNode(List *list, int position, int *errorCode) {
-    if (isEmpty(list) || position < 0) {
+List *create() {
+    List *list = malloc(sizeof(List));
+    list->head = NULL;
+
+    return list;
+}
+
+int deleteNode(List* list, int index) {
+    if (isEmpty(list)) {
+        return -1;
+    }
+    if (index < 0) {
+        return -1;
+    }
+    if (index == 0) {
+        Node *nodeToDelete = list->head;
+        list->head = nodeToDelete->next;
+        free(nodeToDelete);
+        return 0;
+    }
+
+    Node *iteratorNode = list->head;
+    int currentIndex = 0;
+    while (currentIndex != index - 1) {
+        if (iteratorNode->next == NULL) {
+            return -1;
+        }
+        ++currentIndex;
+        iteratorNode = iteratorNode->next;
+    }
+    Node *nodeToDelete = iteratorNode->next;
+    iteratorNode->next = nodeToDelete->next;
+    free(nodeToDelete);
+    return 0;
+}
+
+int findNode(List *list, int index, int *errorCode) {
+    if (isEmpty(list) || index < 0) {
         *errorCode = -1;
         return 0;
     }
-    Node *temp = list->head;
+    Node *iteratorNode = list->head;
 
-    for (int i = 1; i <= position; ++i) {
-        temp = temp->next;
-        if (temp == NULL) {
+    for (int i = 0; i < index; ++i) {
+        iteratorNode = iteratorNode->next;
+        if (iteratorNode == NULL) {
             *errorCode = -1;
             return 0;
         }
     }
 
-    return temp->value;
+    *errorCode = 0;
+    return iteratorNode->value;
 }
+
+bool isEmpty(List *list) {
+    return list->head == NULL;
+}
+
+void clear(List *list) {
+    while (!isEmpty(list)) {
+        deleteNode(list, 0);
+    }
+    free(list);
+}
+
+int changeNode(List *list, int index, int value) {
+    if (index < 0) {
+        return -1;
+    }
+    if (isEmpty(list)) {
+        return -1;
+    }
+
+    Node *iteratorNode = list->head;
+    int currentIndex = 0;
+    while (currentIndex != index) {
+        if (iteratorNode->next == NULL) {
+            return -1;
+        }
+        ++currentIndex;
+        iteratorNode = iteratorNode->next;
+    }
+
+    iteratorNode->value = value;
+    return 0;
+}
+
